@@ -1,0 +1,9 @@
+.div-unit{
+    width: 90%;
+    height: 150px;    
+    margin: 2px auto;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+    padding: 20px;
+}

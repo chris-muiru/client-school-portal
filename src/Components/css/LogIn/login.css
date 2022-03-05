@@ -1,0 +1,35 @@
+.div-login{
+    background-color:  rgb(51, 47, 47);
+}
+.heading{
+    text-align: center;
+    margin-top: 60px;
+}
+.login{
+    height: 600px;
+    display: flex;
+    background-color:  rgb(51, 47, 47);
+    width: 80%;
+    margin: 0 auto;
+}
+.input{
+    display: block;
+    margin: 40px 60px;
+    width: 250px;
+    height: 40px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+
+}
+
+#btn-submit{
+    width: 120px;
+    height: 40px;
+    position: relative;
+    left: 120px;
+    background-color: green;
+    border: none;
+    color:white;
+    border-radius: 6px;
+}

@@ -1,0 +1,21 @@
+.heading-fee{
+    margin-top: 10px;
+    text-align: center;
+    color: orangered;
+}
+.div-fee{
+    width: 90%;
+    height: 200px;
+    margin: 5px auto;
+    padding: 20px;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+    border-radius: 2px;
+
+
+}
+.fee-details *{
+    padding-top: 3px;
+
+}

@@ -1,0 +1,48 @@
+.div-menubar{
+    width: 40px;
+    height: 40px;
+    background-color: orangered;
+    position: relative;
+    float: left;
+    border-radius: 50%;
+    right: 27px;
+    bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    color: black;
+    position: relative;
+    display:block;
+}
+
+.menu-content{
+    position: relative;
+    width: 100%;
+    display: none;
+    background-color:rgb(51, 50, 50);
+    min-width: 200px;
+    height: 300px;
+    right: 23px;
+    top: 10px;
+    box-shadow:5px 5px 20px rgb(51, 50, 50);
+    z-index: 1;
+
+    
+}
+.menu-content *{
+    padding-top: 10px;
+    color: green;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    padding-left: 10px;
+
+}
+
+.fonta{
+    width: 15px;
+    display: inline;
+    position: relative;
+    top: 5px;
+    padding-right: 10px;
+
+}

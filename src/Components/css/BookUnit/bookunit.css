@@ -1,0 +1,38 @@
+#units{
+    text-align: center;
+}
+.modal{
+    position: fixed;
+    width: 100%;
+} 
+.modal-content{
+    margin: 20px auto;
+    width: 90%;
+    padding: 20px;
+    background-color: rgb(217, 217, 224);
+    box-sizing: border-box;
+    border-radius: 5%;
+
+
+}
+#myBtn{
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 5%;
+    padding:10px;
+    margin: 40px auto;
+    position: relative;
+    left: 40%;
+    
+
+}
+
+.table{
+    text-align: center;
+}
+table,th,td{
+   border:1px solid black;
+   border-collapse: collapse;
+   padding: 15px;
+}
