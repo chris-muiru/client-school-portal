@@ -1,24 +1,16 @@
 import { createContext,useContext,useEffect,useState } from "react"
 import jwtDecode from "jwt-decode";
-import { Redirect, useHistory} from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 const AuthContext=createContext();
+
 export function useAuthContext(){  // custom hook
     return useContext(AuthContext)        
 }
 
 const AuthProvider=({children})=>{
-    let history=useHistory()
-    let navigate=useNavigate()
 
-    // const [user,setUser]=useState(()=>localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')):null)
-    // const [authTokens,setAuthTokens]=useState(()=>localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')):null)
+    const [user,setUser]=useState(()=>localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')):null)
+    const [authTokens,setAuthTokens]=useState(()=>localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')):null)
 
-    const [user,setUser]=useState(null);
-    const [authTokens,setAuthTokens]=useState(null);
-
-    // const [loading,setLoading]=useState(true)
-    
     
     let loginUser=async(e)=>{
         const GET_TOKEN='http://localhost:8000/api/token/'
@@ -42,8 +34,7 @@ const AuthProvider=({children})=>{
 
             console.log(`1. ${authTokens}`)
             
-            // history.push('/dash/')
-            navigate('/dash')
+            window.location = '/dash'
         }
         else{
             alert("something went wrong") 
@@ -56,7 +47,7 @@ const AuthProvider=({children})=>{
         setUser(null)
         localStorage.removeItem('authTokens')
         
-        history.push("/login")
+        window.location = '/login'
 
     }
 
@@ -79,7 +70,7 @@ const AuthProvider=({children})=>{
             }
             else{
                 logOutUser()
-                history.push('login')
+                window.location = 'login'
 
             }
 
@@ -95,22 +86,22 @@ const AuthProvider=({children})=>{
 
     }
 
-    // useEffect(
-    //     ()=>{
-    //         console.log("update token called")
-    //         let interval=setInterval(()=>{
-    //             if(authTokens){
-    //                 updateTokens()
-    //             }
-    //         },240000)
+    useEffect(
+        ()=>{
+            console.log("update token called")
+            let interval=setInterval(()=>{
+                if(authTokens){
+                    updateTokens()
+                }
+            },240000)
 
-    //         // cleanup
-    //         return()=>{
-    //             clearInterval(interval)
-    //         }
+            // cleanup
+            return()=>{
+                clearInterval(interval)
+            }
             
-    //     },[authTokens]
-    // )
+        },[authTokens]
+    )
     return(
         <AuthContext.Provider value={contextData}>
             {children}
