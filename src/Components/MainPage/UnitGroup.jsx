@@ -35,7 +35,7 @@ const UnitGroup = () => {
 			<Header />
 			<StudentPic />
 			<h3 className="h2-units">Units Info</h3>
-			<Unit unitDetail="units done:">{total_units}</Unit>
+			<Unit unitDetail="total units:">{total_units}</Unit>
 			<Unit unitDetail="selected units:">{booked_units}</Unit>
 			<Unit unitDetail="remaining units:">{remaining_units}</Unit>
 			<StudentInfo />
