@@ -1,76 +1,84 @@
-import '../css/BookUnit/bookunit.css';
-import { useState,useEffect } from 'react';
-import axios from 'axios';
-import { Unit, UnitsTable } from "./View"
-
+import "../css/BookUnit/bookunit.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Unit, UnitsTable } from "./View";
+import { useAuthContext } from "../../Context/AuthContext";
 // get all available units
-const getUnits = async () => {
-    let promise=await axios.get('/units/');
-    return promise.data
-}
-
-// post selected units to server
-const registerUnits = (units) => fetch('http://localhost:8000/book/',
-        {
-            method:"POST", 
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(units)
-        }
-)
-
-
 
 const BookUnits = () => {
-    const [ units, setUnits ] = useState([])
-    const [ selectedUnits, setSelectedUnits ] = useState([])
-    
-    
-    const fetchData=async()=>{
-        setUnits(
-            await getUnits()
-        )
-    }
-    useEffect(
-        ()=>{
-        fetchData()
-        }
-    ,[])
-        
+	const [units, setUnits] = useState([]);
+	const [selectedUnits, setSelectedUnits] = useState([]);
 
-    const selectUnit = (unit) => {
-        const index = selectedUnits.findIndex( entry => entry.unit_code === unit.unit_code)
+	let { getAuthToken } = useAuthContext();
 
-        if(index === -1)  {
-            selectedUnits.push(unit)
-        } else {
-            selectedUnits.splice(index, 1)
-        }
-    } 
+	const getUnits = async () => {
+		const UNITS_URL = "http://localhost:8000/units/";
+		let response = await fetch(UNITS_URL, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${getAuthToken()}`,
+			},
+		});
+		setUnits(await response.json());
+	};
 
-    const submitUnits = async () => {
-        try {
-            await registerUnits(selectedUnits)
-            // display message
-        } catch (error) {
-            console.log(error)
-            // report error
-        } finally {
-            setSelectedUnits([])
-        }
-    }
+	// post selected units to server
+	const BOOK_UNITS_URL = "http://localhost:8000/book-units/";
+	const registerUnits = (units) => {
+		fetch(BOOK_UNITS_URL, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${getAuthToken()}`,
+			},
+			body: JSON.stringify(units),
+		});
+		window.location = "/dash";
+	};
 
-    return (
-        <UnitsTable submit={ submitUnits }> {
-            units.map( unit => {
-                return (
-                    <Unit key={ unit.unit_code } unit={unit} onClick={ () => selectUnit(unit) }/>
-                )
-            })
-        }
-        </UnitsTable>
-    )
-}
+	useEffect(() => {
+		getUnits();
+	}, []);
 
-export default BookUnits
+	const selectUnit = (unit) => {
+		const index = selectedUnits.findIndex(
+			(entry) => entry.unit_code === unit.unit_code
+		);
+
+		if (index === -1) {
+			selectedUnits.push(unit);
+		} else {
+			selectedUnits.splice(index, 1);
+		}
+	};
+
+	const submitUnits = async () => {
+		try {
+			await registerUnits(selectedUnits);
+			// display message
+		} catch (error) {
+			console.log(error);
+			// report error
+		} finally {
+			setSelectedUnits([]);
+		}
+	};
+
+	return (
+		<UnitsTable submit={submitUnits}>
+			{" "}
+			{units.map((unit) => {
+				return (
+					<Unit
+						key={unit.unit_code}
+						unit={unit}
+						onClick={() => selectUnit(unit)}
+					/>
+				);
+			})}
+		</UnitsTable>
+	);
+};
+
+export default BookUnits;
