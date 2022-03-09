@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const StudentInfo = () => {
 	const [studentData, setStudentData] = useState({});
-	let { authTokens } = useAuthContext();
+	let { getAuthToken } = useAuthContext();
 
 	let fetchUserInfo = async () => {
 		const USER_INFO_URL = "http://localhost:8000/student-detail/";
@@ -14,7 +14,7 @@ const StudentInfo = () => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${authTokens.access}`,
+				Authorization: `Bearer ${getAuthToken()}`,
 			},
 			// body:JSON.stringif)
 		});
