@@ -1,0 +1,6 @@
+build/
+*.log
+package-lock.json
+node_modules/
+*.lock
+assets/
