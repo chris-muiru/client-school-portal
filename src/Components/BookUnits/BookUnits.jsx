@@ -1,6 +1,5 @@
 import "../css/BookUnit/bookunit.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Unit, UnitsTable } from "./View";
 import { useAuthContext } from "../../Context/AuthContext";
 // get all available units
