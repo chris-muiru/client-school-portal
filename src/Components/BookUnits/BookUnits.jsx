@@ -1,83 +1,112 @@
-import "../css/BookUnit/bookunit.css";
-import { useState, useEffect } from "react";
-import { Unit, UnitsTable } from "./View";
-import { useAuthContext } from "../../Context/AuthContext";
-// get all available units
+import Header from "../MainPage/Header"
+import "../css/BookUnit/bookunit.css"
+import { useEffect, useReducer, useState } from "react"
 
+import { useAuthContext } from "../../Context/AuthContext"
 const BookUnits = () => {
-	const [units, setUnits] = useState([]);
-	const [selectedUnits, setSelectedUnits] = useState([]);
+	let { getAuthToken } = useAuthContext()
+	let [units, setUnits] = useState([])
 
-	let { getAuthToken } = useAuthContext();
+	let [bookedUnits, setBookedUnits] = useState([])
 
-	const getUnits = async () => {
-		const UNITS_URL = "http://localhost:8000/units/";
+	let addOrRemoveBookedUnit = (unit) => {
+		let index = bookedUnits.findIndex((e) => e.unit_code === unit.unit_code)
+		if (index === -1) {
+			setBookedUnits([...bookedUnits, unit])
+		} else {
+			let x = bookedUnits
+			x.splice(index, 1)
+			setBookedUnits(x)
+		}
+	}
+
+	let fetchAllUnits = async () => {
+		const UNITS_URL = "http://localhost:8000/units/"
 		let response = await fetch(UNITS_URL, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${getAuthToken()}`,
 			},
-		});
-		setUnits(await response.json());
-	};
+		})
+		setUnits(await response.json())
+	}
+	let unitTableView = (unit) => {
+		return (
+			<tr>
+				<td id="td-unit-code">{unit.unit_code}</td>
+				<td id="td-unit-name">{unit.unit_name}</td>
+				<td id="td-checkbox">
+					<input
+						type="checkbox"
+						onClick={() => {
+							addOrRemoveBookedUnit(unit)
+						}}
+					/>
+				</td>
+			</tr>
+		)
+	}
+	let displayAllUnits = () => {
+		return units.map(unitTableView)
+	}
+	console.log(bookedUnits)
 
-	// post selected units to server
-	const BOOK_UNITS_URL = "http://localhost:8000/book-units/";
-	const registerUnits = (units) => {
-		fetch(BOOK_UNITS_URL, {
+	let bookSelectedUnits = async () => {
+		const BOOK_UNITS_URL = "http://localhost:8000/book-units/"
+		await fetch(BOOK_UNITS_URL, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${getAuthToken()}`,
 			},
-			body: JSON.stringify(units),
-		});
-		window.location = "/dash";
-	};
+			body: JSON.stringify(bookedUnits),
+		})
+		window.location = "/dash"
+	}
 
 	useEffect(() => {
-		getUnits();
-	}, []);
-
-	const selectUnit = (unit) => {
-		const index = selectedUnits.findIndex(
-			(entry) => entry.unit_code === unit.unit_code
-		);
-
-		if (index === -1) {
-			selectedUnits.push(unit);
-		} else {
-			selectedUnits.splice(index, 1);
-		}
-	};
-
-	const submitUnits = async () => {
-		try {
-			await registerUnits(selectedUnits);
-			// display message
-		} catch (error) {
-			console.log(error);
-			// report error
-		} finally {
-			setSelectedUnits([]);
-		}
-	};
+		fetchAllUnits()
+	}, [])
 
 	return (
-		<UnitsTable submit={submitUnits}>
-			{" "}
-			{units.map((unit) => {
-				return (
-					<Unit
-						key={unit.unit_code}
-						unit={unit}
-						onClick={() => selectUnit(unit)}
-					/>
-				);
-			})}
-		</UnitsTable>
-	);
-};
+		<div className="bookunit">
+			<Header />
+			<div className="modal">
+				<div className="modal-content" id="myModal">
+					<div className="modal-header">
+						<h4 id="units">Units</h4>
+					</div>
+					<div className="modal-body">
+						<div>
+							<table id="table">
+								<thead>
+									<tr>
+										<th>unit code</th>
+										<th>unit name</th>
+									</tr>
+								</thead>
+								<tbody>{displayAllUnits()}</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<button id="myBtn" type="submit" onClick={bookSelectedUnits}>
+					book units
+				</button>
+			</div>
+		</div>
+	)
+}
 
-export default BookUnits;
+// export const Unit = ({ unit, onClick }) => (
+// 	<tr>
+// 		<td id="td-unit-code">{unit.unit_code}</td>
+// 		<td id="td-unit-name">{unit.unit_name}</td>
+// 		<td id="td-checkbox">
+// 			<input type="checkbox" onClick={onClick} />
+// 		</td>
+// 	</tr>
+// )
+
+export default BookUnits
