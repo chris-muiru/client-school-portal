@@ -1,6 +1,6 @@
 import Header from "../MainPage/Header"
 import "../css/BookUnit/bookunit.css"
-import { useEffect, useReducer, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useAuthContext } from "../../Context/AuthContext"
 const BookUnits = () => {
@@ -50,7 +50,6 @@ const BookUnits = () => {
 	let displayAllUnits = () => {
 		return units.map(unitTableView)
 	}
-	console.log(bookedUnits)
 
 	let bookSelectedUnits = async () => {
 		const BOOK_UNITS_URL = "http://localhost:8000/book-units/"
