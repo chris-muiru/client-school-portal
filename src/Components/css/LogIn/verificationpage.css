@@ -1,5 +1,13 @@
-.verification{
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(165, 155, 155);
+.verification {
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(51, 47, 47);
+	overflow: auto;
+	height: 100vh;
+}
+@media only screen and (min-width: 992px) {
+	.wrapper-verfication {
+		width: 50%;
+		margin: auto;
+	}
 }

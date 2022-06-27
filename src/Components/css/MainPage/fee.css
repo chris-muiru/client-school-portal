@@ -19,3 +19,9 @@
 .fee-p {
 	margin-right: 100px;
 }
+/* 
+@media only screen and (min-width: 992px) {
+	.div-fee {
+		width: 70%;
+	}
+} */

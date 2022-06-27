@@ -1,22 +1,10 @@
-.div-result{
-    margin: 0 auto;
-    width: 90%;
+.div-result {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-h2{
-    text-align: center;
-
-}
-.semister {
-    border: none;
-}
-
-table,tr{
-    text-align: left;
-    height: 10px;
-    box-sizing: border-box;
-}
-
-.h3-heading{
-    margin-left: 28px;
+h2 {
+	text-align: center;
 }

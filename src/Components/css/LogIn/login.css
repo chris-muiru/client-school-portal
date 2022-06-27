@@ -1,6 +1,5 @@
 .div-login {
 	background-color: rgb(51, 47, 47);
-	height: 100vh;
 }
 .heading {
 	text-align: center;
@@ -12,15 +11,12 @@
 	flex-direction: column;
 	background-color: rgb(51, 47, 47);
 	width: 300px;
-    height: 200px;
-	/* background-color: red; */
+	height: 200px;
 	margin: auto;
-	position: relative;
 }
 .input {
-	display: block;
 	height: 40px;
-    margin-top: 30px;
+	margin-top: 30px;
 	box-sizing: border-box;
 	border: none;
 	border-radius: 5px;
@@ -34,8 +30,14 @@
 	border: none;
 	color: white;
 	border-radius: 6px;
-    position: absolute;
-    bottom: 0px;
-    right: 50%;
-    margin-right: -100px;
+	position: absolute;
+	bottom: 0px;
+	right: 50%;
+	margin-right: -100px;
+}
+
+@media only screen and (min-width: 992px) {
+	.login {
+		width: 600px;
+	}
 }

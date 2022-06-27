@@ -1,7 +1,13 @@
-.div-unitgroup{
-    position: relative;
+.div-unitgroup {
 }
-.h2-units{
-    text-align: center;
-    color: orangered;
+.h2-units {
+	text-align: center;
+	color: orangered;
+}
+
+@media only screen and (min-width: 992px) {
+    .div-unitgroup{
+        width: 60%;
+        margin:auto
+    }
 }
