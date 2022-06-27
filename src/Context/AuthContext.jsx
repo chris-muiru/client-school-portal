@@ -33,14 +33,12 @@ const AuthProvider = ({ children }) => {
 			}),
 		})
 		let data = await response.json()
-		console.log(` ----- ${data} is the data`)
 		// jwt decode to decode user data
 		if (response.status === 200) {
 			setAuthTokens(data)
 			setUser(jwtDecode(data.access))
 			localStorage.setItem("authTokens", JSON.stringify(data))
 
-			console.log(`1. ${authTokens}`)
 
 			window.location = "/dash"
 		} else {
@@ -58,7 +56,6 @@ const AuthProvider = ({ children }) => {
 
 	let updateTokens = async () => {
 		const REFRESH_TOKEN = "http://localhost:8000/api/token/refresh/"
-		console.log(authTokens.refresh)
 		let response = await fetch(REFRESH_TOKEN, {
 			method: "POST",
 			headers: {
@@ -74,14 +71,14 @@ const AuthProvider = ({ children }) => {
 			localStorage.setItem("authTokens", JSON.stringify(data))
 		} else {
 			logOutUser()
-			window.location = "login"
+			window.location = "/login"
 		}
 	}
 
 	const getAuthToken = () => {
 		if (jwtDecode(authTokens.access).exp < Date.now() / 1000) {
 			localStorage.clear()
-			window.location = "/auth"
+			window.location = "/login"
 		}
 		return authTokens.access
 	}
@@ -94,7 +91,6 @@ const AuthProvider = ({ children }) => {
 	}
 
 	useEffect(() => {
-		console.log("update token called")
 		let interval = setInterval(() => {
 			if (authTokens) {
 				updateTokens()
