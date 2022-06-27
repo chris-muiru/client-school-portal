@@ -25,7 +25,6 @@ const StudentInfo = () => {
 	useEffect(() => {
 		fetchUserInfo();
 	}, []);
-	console.log(studentData);
 	return (
 		<div className="div-studentinfo">
 			<h3 className="heading-studentinfo">Student data</h3>
